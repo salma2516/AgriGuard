@@ -63,4 +63,4 @@ Salma S
 
 Computer Science Engineering Student
 
-AI & Machine Learning Enthusiast
+Aspiring AI & Machine Learning Engineer | Python Developer | Building Intelligent Solutions using Machine Learning, Deep Learning, Flask and TensorFlow.
