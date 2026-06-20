@@ -3,7 +3,7 @@ import mysql.connector
 DB_CONFIG = {
     "host": "localhost",
     "user": "root",
-    "password": "Root@123",
+    "password"="YOUR_DATABASE_PASSWORD",
     "database": "agriguard"
 }
 
@@ -20,7 +20,7 @@ def create_database():
         conn = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="Root@123"
+            password="YOUR_DATABASE_PASSWORD"
         )
 
         cursor = conn.cursor()
