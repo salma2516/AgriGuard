@@ -1,0 +1,8 @@
+flask
+tensorflow
+opencv-python
+numpy
+googletrans==4.0.0rc1
+twilio
+mysql-connector-python
+pillow

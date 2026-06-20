@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AgriGuard Dashboard</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+<h2>🌱 AgriGuard Smart Farming Assistant</h2>
+
+<div class="nav-links">
+
+    <a href="/weather">{{ texts.weather }}</a>
+
+    <a href="/history">{{ texts.history}}</a>
+
+    <a href="/profile">{{ texts.profile }}</a>
+
+    <a href="/logout">{{ texts.logout }}</a>
+
+</div>
+
+</div>
+
+<div class="container">
+
+<!-- Welcome -->
+
+<div class="card">
+
+    <h2>{{ texts.welcome }} {{ farmer_name }}</h2>
+
+    <p>
+
+        AI Powered Crop Disease Detection,
+        Fertilizer Recommendation,
+        Weather Monitoring and Smart Farming Assistant
+
+    </p>
+
+</div>
+
+<!-- Statistics -->
+
+<div class="stats">
+
+    <div class="stat-box">
+
+        <h3>Total Predictions</h3>
+
+        <h1>{{ predictions|length }}</h1>
+
+    </div>
+
+    <div class="stat-box">
+
+        <h3>Healthy Crops</h3>
+
+        <h1>🌿</h1>
+
+    </div>
+
+    <div class="stat-box">
+
+        <h3>Disease Alerts</h3>
+
+        <h1>🚨</h1>
+
+    </div>
+
+    <div class="stat-box">
+
+        <h3>AI Monitoring</h3>
+
+        <h1>🤖</h1>
+
+    </div>
+
+</div>
+
+<!-- Disease Detection -->
+
+<div class="card">
+
+    <h2>📷 {{ texts.crop_detection }}</h2>
+
+    <form action="/predict"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <label>Choose or Capture Crop Image</label>
+
+        <input type="file"
+       id="image"
+       name="image"
+       accept="image/*"
+       capture="environment"
+       required>
+
+        <br><br>
+
+        <button type="button"
+                onclick="openCamera()">
+
+            📸 Capture Image
+
+        </button>
+
+        <button type="submit">
+
+            🔍 Detect Disease
+
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+function openCamera(){
+
+    document.getElementById("image")
+        .setAttribute(
+            "capture",
+            "environment"
+        );
+
+    document.getElementById("image")
+        .click();
+}
+
+</script>
+
+<!-- Voice Assistant -->
+
+<!-- AI Assistant -->
+
+<div class="card">
+
+<h2>🤖 {{ texts.ai_assistant }}</h2>
+
+<p>
+    Ask questions about crops, fertilizer,
+    irrigation, weather and diseases.
+</p>
+
+<form id="chatForm">
+
+    <input type="text"
+           id="question"
+           placeholder="Example: What fertilizer is best for tomato plants?"
+           required>
+
+    <button type="submit">
+        Ask Question
+    </button>
+
+    
+<button type="button"
+        onclick="startListening()">
+    🎤 Speak
+</button>
+
+</form>
+
+<br>
+<br>
+
+<div id="wave-container" style="display:none;">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
+
+<div id="recording-text"
+     style="
+        color:red;
+        font-size:22px;
+        font-weight:bold;
+     ">
+</div>
+
+<br>
+
+<div id="answer"
+     class="answer-box">
+</div>
+
+</div>
+
+<script>
+    function startListening(){
+
+    if (!('webkitSpeechRecognition' in window)) {
+
+        alert(
+            "Speech Recognition not supported in this browser."
+        );
+
+        return;
+    }
+
+    document.getElementById(
+        "wave-container"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "recording-text"
+    ).innerHTML =
+        "🎤 Recording... Speak now";
+
+    const recognition =
+        new webkitSpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.start();
+
+    recognition.onresult = function(event){
+
+        let text =
+            event.results[0][0].transcript;
+
+        document.getElementById(
+            "question"
+        ).value = text;
+
+        document.getElementById(
+            "recording-text"
+        ).innerHTML =
+            "✅ Voice Captured";
+
+        document.getElementById(
+            "wave-container"
+        ).style.display = "none";
+    };
+
+    recognition.onerror = function(event){
+
+        document.getElementById(
+            "wave-container"
+        ).style.display = "none";
+
+        document.getElementById(
+            "recording-text"
+        ).innerHTML =
+            "❌ Voice Not Detected";
+
+        console.log(event);
+
+        alert(
+            "Microphone Error: " +
+            event.error
+        );
+    };
+
+    recognition.onend = function(){
+
+        document.getElementById(
+            "wave-container"
+        ).style.display = "none";
+    };
+}
+
+</script>
+
+
+<!-- Recent Predictions -->
+
+<div class="card">
+
+    <h2>📊 Recent Predictions</h2>
+
+    <table>
+
+        <tr>
+
+            <th>Disease</th>
+
+            <th>Confidence</th>
+
+            <th>Health Score</th>
+
+            <th>Fertilizer</th>
+
+            <th>Water</th>
+
+            <th>Date</th>
+
+        </tr>
+
+        {% for p in predictions %}
+
+        <tr>
+
+            <td>{{ p.disease }}</td>
+
+            <td>{{ p.confidence }}%</td>
+
+            <td>{{ p.health_score }}%</td>
+
+            <td>{{ p.fertilizer }}</td>
+
+            <td>{{ p.water_status }}</td>
+
+            <td>{{ p.prediction_date }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Prediction History</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>🌱 AgriGuard Smart Farming Assistant</h2>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+
+        <a href="/profile">Profile</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>📜 Prediction History</h2>
+
+        <p>
+            View all previously detected crop diseases,
+            recommendations and health reports.
+        </p>
+
+        <table>
+
+            <tr>
+
+                <th>Disease</th>
+                <th>Confidence</th>
+                <th>Health Score</th>
+                <th>Fertilizer</th>
+                <th>Water Requirement</th>
+                <th>Date</th>
+
+            </tr>
+
+            {% for h in history_data %}
+
+            <tr>
+
+                <td>{{ h.disease }}</td>
+
+                <td>{{ h.confidence }}%</td>
+
+                <td>{{ h.health_score }}%</td>
+
+                <td>{{ h.fertilizer }}</td>
+
+                <td>{{ h.water_status }}</td>
+
+                <td>{{ h.prediction_date }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <br>
+
+        <a href="/dashboard">
+
+            <button>
+
+                ← Back to Dashboard
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Weather Forecast</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>🌱 AgriGuard</h2>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+        <a href="/history">History</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>🌦 Weather Forecast</h1>
+
+        {% if weather %}
+
+        <div class="weather-box">
+
+            <h2>{{ weather.city }}</h2>
+
+            <div class="weather-item">
+                🌡 Temperature:
+                <strong>{{ weather.temperature }} °C</strong>
+            </div>
+
+            <div class="weather-item">
+                💧 Humidity:
+                <strong>{{ weather.humidity }} %</strong>
+            </div>
+
+            <div class="weather-item">
+                ☁ Condition:
+                <strong>{{ weather.description }}</strong>
+            </div>
+
+            {% if weather.humidity > 70 %}
+
+            <div class="weather-alert warning">
+
+                ⚠ High Humidity Detected.
+                Monitor crops for fungal diseases.
+
+            </div>
+
+            {% endif %}
+
+            {% if weather.temperature > 35 %}
+
+            <div class="weather-alert danger">
+
+                🔥 High Temperature.
+                Increase irrigation frequency.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+        <a href="/dashboard" class="btn">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

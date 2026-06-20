@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Farmer Profile</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+<div class="navbar">
+
+    <h2>🌱 AgriGuard</h2>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+
+        <a href="/history">History</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>👨‍🌾 Farmer Profile</h2>
+
+        <div class="profile-item">
+
+            <strong>Name:</strong>
+
+            {{ farmer_name }}
+
+        </div>
+
+        <div class="profile-item">
+
+            <strong>Phone Number:</strong>
+
+            {{ phone_number }}
+
+        </div>
+
+        <div class="profile-item">
+
+            <strong>Language:</strong>
+
+            {{ language }}
+
+        </div>
+
+        <br>
+
+        <a href="/dashboard">
+
+            <button>
+
+                Back to Dashboard
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

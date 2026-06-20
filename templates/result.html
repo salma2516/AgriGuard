@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Prediction Result</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>🌱 AgriGuard Smart Farming Assistant</h2>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+
+        <a href="/history">History</a>
+
+        <a href="/profile">Profile</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="result-card">
+
+        <h1>🌱 Disease Detection Result</h1>
+
+        <div class="result-item">
+
+            <h3>Detected Disease</h3>
+
+            <p>{{ disease }}</p>
+
+        </div>
+
+        <div class="result-item">
+
+            <h3>Prediction Confidence</h3>
+
+            <p>{{ confidence }}%</p>
+
+        </div>
+
+        <div class="result-item">
+
+            <h3>Crop Health Score</h3>
+
+            <p>{{ health_score }}%</p>
+
+        </div>
+
+        <div class="result-item">
+
+            <h3>Fertilizer Recommendation</h3>
+
+            <p>{{ fertilizer }}</p>
+
+        </div>
+
+        <div class="result-item">
+
+            <h3>Water Requirement</h3>
+
+            <p>{{ water_status }}</p>
+
+        </div>
+
+        <br>
+
+        {% if health_score >= 80 %}
+
+        <p class="success">
+            ✅ Crop Condition is Good
+        </p>
+
+        {% else %}
+
+        <p class="danger">
+            ⚠ Disease Detected - Immediate Action Recommended
+        </p>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/dashboard">
+
+            <button>
+                Back to Dashboard
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
