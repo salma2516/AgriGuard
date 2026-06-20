@@ -5,7 +5,8 @@ USE agriguard;
 CREATE TABLE farmers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     farmer_name VARCHAR(100),
-    phone_number VARCHAR(20),
+    phone_number VARCHAR(20) UNIQUE,
+    password VARCHAR(255),
     language VARCHAR(20),
     country VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -20,7 +21,9 @@ CREATE TABLE predictions (
     fertilizer TEXT,
     water_status TEXT,
     prediction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (farmer_id) REFERENCES farmers(id)
+    FOREIGN KEY (farmer_id)
+    REFERENCES farmers(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE notifications (
@@ -29,5 +32,7 @@ CREATE TABLE notifications (
     message TEXT,
     notification_type VARCHAR(20),
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (farmer_id) REFERENCES farmers(id)
+    FOREIGN KEY (farmer_id)
+    REFERENCES farmers(id)
+    ON DELETE CASCADE
 );
